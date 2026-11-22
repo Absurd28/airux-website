@@ -15,6 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Build
-        run: SITE_BASE=/${{ github.event.repository.name }}/ python3 build.py
+        run: python3 build.py
       - name: Check links
         run: python3 tests/check_links.py

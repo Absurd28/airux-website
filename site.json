@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "AIRUX",
-    "url": "https://absurd28.github.io/airux-website",
+    "url": "https://airux-os.pages.dev",
     "tagline": "A Debian-based operating system with AIRA, a fully local voice assistant that controls your system safely and won't make things up.",
     "github": "https://github.com/Absurd28/AIRUX_OS",
     "license": "MIT",

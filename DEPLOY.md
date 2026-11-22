@@ -4,7 +4,8 @@ Everything here is free. Three places hold the pieces:
 
 | What | Where | Cost |
 | --- | --- | --- |
-| The website | GitHub Pages (`absurd28.github.io/airux-website`), deployed on every push | Free: HTTPS, 100 GB a month |
+| The website | Cloudflare Pages (`airux-os.pages.dev`), built on every push | Free: HTTPS, no bandwidth cap |
+| The old address | GitHub Pages (`absurd28.github.io/airux-website`): each page forwards to the new one | Free |
 | The ISO (4.66 GB) and `SHA256SUMS` | SourceForge project `airux` | Free: files up to 10 GB, world mirrors |
 | The AIROX Connect APK (61 MB) | GitHub Releases on `Absurd28/AIROX_Connect` | Free |
 
@@ -78,19 +79,31 @@ git commit -am "Downloads are live" && git push
 
 Until then the buttons say "Coming soon", so the site never links to a missing file.
 
-## 5. Hosting: GitHub Pages now, Cloudflare Pages optional
+## 5. Hosting: Cloudflare Pages, with the old GitHub Pages address forwarding
 
-The site is live on GitHub Pages: `.github/workflows/github-pages.yml` tests, builds and deploys
-on every push to `main`. To move to Cloudflare Pages later (no bandwidth cap, `airux.pages.dev`):
+The site is on **Cloudflare Pages** at `https://airux-os.pages.dev` (no bandwidth cap).
+`airux.pages.dev` was already someone else's. Set up once:
 
-1. Make a free Cloudflare account.
-2. **Workers & Pages → Create → Pages → Connect to Git**, pick `Absurd28/airux-website`.
-3. Project name `airux` (the address becomes `airux.pages.dev`; if the name is taken, pick another
-   and set the same address in `site.json` → `site.url`).
-4. Build command `python3 build.py`, output directory `dist`. Save and deploy.
+1. Make a free Cloudflare account (dash.cloudflare.com/sign-up; no domain or card needed).
+2. **Workers & Pages → Create → Pages → Connect to Git**. Let Cloudflare's GitHub app see only
+   `Absurd28/airux-website`, then pick it.
+3. Project name `airux-os`, production branch `main`, framework preset None.
+4. Build command (the tests run first, so a broken link or a missing hash never goes live):
 
-5. Set `site.url` in `site.json` to the new address, and turn off GitHub Pages in the repository's
-   **Settings → Pages** (or delete the workflow) so there is one copy of the site.
+   ```bash
+   pip install pytest==9.2.0 && python3 -m pytest -q tests && python3 build.py
+   ```
+
+   Output directory `dist`. If the build can't find Python 3.11 or newer, add the environment
+   variable `PYTHON_VERSION` = `3.13`. Save and deploy.
+
+After that every push to `main` deploys. The site's own address is `site.json` → `site.url`
+(used for canonical links, the sitemap and the share image); change it there if the address
+changes.
+
+The **old address** `absurd28.github.io/airux-website` stays alive: `github-pages.yml` runs the
+tests and publishes `build.py --redirect` there, a page per site page that forwards to the same
+page on `site.url` (and a `404.html` that forwards any other old link, keeping its path).
 
 Cloudflare reads `_headers` (HTTPS-only, a strict content policy, caching); GitHub Pages ignores it.
 
@@ -105,8 +118,8 @@ Checked on 2026-11-22: `airux.org` and `airox.org` are taken; `airuxos.org`, `ai
   the new address and push.
 
 Free domain names exist but are not dependable for a product: `eu.org` approvals take months, and
-`is-a.dev`-style names are for personal developer pages. The free `airux.pages.dev` address is the
-better free choice.
+`is-a.dev`-style names are for personal developer pages. The free `airux-os.pages.dev` address is
+the better free choice.
 
 ## Adding an app
 
@@ -118,7 +131,8 @@ page and at `/apps/<id>/`.
 
 | Workflow | Runs when | What it does |
 | --- | --- | --- |
-| `github-pages.yml` | every push to `main`, or **Run workflow** | runs the tests, builds, deploys to GitHub Pages; a failing test stops the deploy |
+| Cloudflare Pages (set up in its dashboard) | every push to `main` | runs the tests, builds, deploys `airux-os.pages.dev`; a failing test stops the deploy |
+| `github-pages.yml` | every push to `main`, or **Run workflow** | runs the tests, then publishes the forwarding pages at the old GitHub Pages address |
 | `links.yml` | Mondays 06:00 UTC, or **Run workflow** | builds, then `tests/check_links.py`: every download answers 200 with the size in `site.json`, `SHA256SUMS` lists the ISO's hash, no external link is broken. Read-only; deploys nothing |
 | Dependabot (`.github/dependabot.yml`) | monthly | opens a pull request when an action in the workflows has a new version |
 

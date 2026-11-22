@@ -114,3 +114,21 @@ def test_base_path_for_github_pages():
     assert 'href="/airux-website/download/"' in home
     assert 'src="/airux-website/static/' in home
     build.build("/")
+
+
+def test_old_address_forwards_every_page():
+    site = json.loads((ROOT / "site.json").read_text(encoding="utf-8"))["site"]["url"].rstrip("/")
+    real = {str(p.relative_to(build.build("/"))).replace("\\", "/") for p in build.DIST.rglob("index.html")}
+    out = build.build_redirect("/airux-website/")
+    try:
+        moved = {str(p.relative_to(out)).replace("\\", "/") for p in out.rglob("index.html")}
+        assert moved == real                          # every page of the real site has a forward
+        assert not (out / "static").exists()          # and nothing else is published there
+        usb = (out / "usb" / "index.html").read_text(encoding="utf-8")
+        assert f'url={site}/usb/"' in usb and f'rel="canonical" href="{site}/usb/"' in usb
+        home = (out / "index.html").read_text(encoding="utf-8")
+        assert f'url={site}/"' in home
+        nf = (out / "404.html").read_text(encoding="utf-8")
+        assert 'b = "/airux-website/"' in nf and f'"{site}"' in nf
+    finally:
+        build.build("/")

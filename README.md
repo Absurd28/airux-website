@@ -1,7 +1,8 @@
 # AIRUX website
 
 The download site for [AIRUX](https://github.com/Absurd28/AIRUX_OS) and its apps: download the OS,
-check it, write it to a USB stick, and get apps such as AIROX Connect.
+check it, write it to a USB stick, and get apps such as AIROX Connect. Live at
+**[airux-os.pages.dev](https://airux-os.pages.dev/)**.
 
 Plain static pages built by one standard-library Python script. No framework, no tracking, no
 cookies, no third-party scripts or fonts; light and dark themes; it works without JavaScript.

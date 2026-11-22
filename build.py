@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Build the AIRUX website into dist/ from site.json, templates/ and static/. Standard library only.
 
-    python3 build.py                 site at the domain root (Cloudflare Pages, a custom domain)
-    SITE_BASE=/airux-website/ python3 build.py      under a path (GitHub Pages project site)
+    python3 build.py                 the site at the domain root (Cloudflare Pages: airux-os.pages.dev)
+    SITE_BASE=/airux-website/ python3 build.py --redirect
+                                     the old GitHub Pages address: every page forwards to the
+                                     same page at site.json's "url"
 
 Products (the OS and each app) live in site.json; adding an app is one entry there plus its
 screenshots in static/img/. A product with "published": false shows "Coming soon" instead of
@@ -354,10 +356,57 @@ def build(base: str = "/") -> Path:
     return DIST
 
 
+MOVED = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The AIRUX website has moved</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="$to">
+<meta http-equiv="refresh" content="0; url=$to">
+$script</head>
+<body>
+<p>The AIRUX website has moved to <a href="$to">$to</a>.</p>
+</body>
+</html>
+"""
+
+# For links to pages that no longer exist: keep the path, so /usb/#windows lands on /usb/#windows.
+FORWARD = """<script>
+var p = location.pathname, b = $base;
+if (p.indexOf(b) === 0) p = "/" + p.slice(b.length);
+location.replace($site + p + location.search + location.hash);
+</script>
+"""
+
+
+def build_redirect(base: str) -> Path:
+    """The site's old address after a move: each page of the real site becomes a page that sends
+    the visitor to the same page at site.json's "url", and 404.html forwards anything else."""
+    site_url = json.loads((ROOT / "site.json").read_text(encoding="utf-8"))["site"]["url"].rstrip("/")
+    real = build("/")
+    pages = sorted(str(p.parent.relative_to(real)).replace("\\", "/") for p in real.rglob("index.html"))
+    shutil.rmtree(DIST)
+    tpl = Template(MOVED)
+    for rel in pages:
+        to = site_url + "/" + ("" if rel == "." else rel + "/")
+        out = DIST / ("" if rel == "." else rel) / "index.html"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(tpl.substitute(to=esc(to), script=""), encoding="utf-8", newline="\n")
+    script = Template(FORWARD).substitute(base=json.dumps(base), site=json.dumps(site_url))
+    (DIST / "404.html").write_text(tpl.substitute(to=esc(site_url + "/"), script=script),
+                                   encoding="utf-8", newline="\n")
+    (DIST / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
+    return DIST
+
+
 if __name__ == "__main__":
+    base = os.environ.get("SITE_BASE", "/")
+    base = base if base.endswith("/") else base + "/"
     try:
-        out = build(os.environ.get("SITE_BASE", "/"))
+        out = build_redirect(base) if "--redirect" in sys.argv[1:] else build(base)
     except SiteError as e:
         sys.exit(f"build failed: {e}")
     n = sum(1 for _ in out.rglob("*.html"))
-    print(f"built {n} pages into {out}")
+    print(f"built {n} {'redirect ' if '--redirect' in sys.argv[1:] else ''}pages into {out}")
