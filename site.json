@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "AIRUX",
-    "url": "https://airux.pages.dev",
+    "url": "https://absurd28.github.io/airux-website",
     "tagline": "A Debian-based operating system with AIRA, a fully local voice assistant that controls your system safely and won't make things up.",
     "github": "https://github.com/Absurd28/AIRUX_OS",
     "license": "MIT",
@@ -78,7 +78,7 @@
       "name": "AIROX Connect",
       "version": "0.1.0",
       "released": "2026-11-22",
-      "published": false,
+      "published": true,
       "preview": "Preview build (debug-signed). A signed release build will replace it.",
       "tagline": "AIRUX on your phone: talk to AIRA, share files, use the Task Manager.",
       "summary": "AIROX Connect pairs your Android phone or tablet with your AIRUX PC by QR code, on the same network. Talk to AIRA by text or voice, see running apps and what AIRA is doing, send files and media both ways, and use the phone as a touchpad, remote or second screen. It is encrypted to your PC's own certificate, and every action passes AIRA's permission broker: risky ones are approved on the phone.",

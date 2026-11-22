@@ -4,7 +4,7 @@ Everything here is free. Three places hold the pieces:
 
 | What | Where | Cost |
 | --- | --- | --- |
-| The website | Cloudflare Pages (`airux.pages.dev`) | Free: unlimited bandwidth, HTTPS |
+| The website | GitHub Pages (`absurd28.github.io/airux-website`), deployed on every push | Free: HTTPS, 100 GB a month |
 | The ISO (4.66 GB) and `SHA256SUMS` | SourceForge project `airux` | Free: files up to 10 GB, world mirrors |
 | The AIROX Connect APK (61 MB) | GitHub Releases on `Absurd28/AIROX_Connect` | Free |
 
@@ -78,7 +78,10 @@ git commit -am "Downloads are live" && git push
 
 Until then the buttons say "Coming soon", so the site never links to a missing file.
 
-## 5. Put the site on Cloudflare Pages
+## 5. Hosting: GitHub Pages now, Cloudflare Pages optional
+
+The site is live on GitHub Pages: `.github/workflows/github-pages.yml` tests, builds and deploys
+on every push to `main`. To move to Cloudflare Pages later (no bandwidth cap, `airux.pages.dev`):
 
 1. Make a free Cloudflare account.
 2. **Workers & Pages → Create → Pages → Connect to Git**, pick `Absurd28/airux-website`.
@@ -86,12 +89,10 @@ Until then the buttons say "Coming soon", so the site never links to a missing f
    and set the same address in `site.json` → `site.url`).
 4. Build command `python3 build.py`, output directory `dist`. Save and deploy.
 
-Every push to `main` deploys again. `_headers` sets HTTPS-only, a strict content policy and caching.
+5. Set `site.url` in `site.json` to the new address, and turn off GitHub Pages in the repository's
+   **Settings → Pages** (or delete the workflow) so there is one copy of the site.
 
-**Without a Cloudflare account:** GitHub Pages works too. In the repository's **Settings → Pages**,
-choose **GitHub Actions**, then run the **GitHub Pages** workflow from the Actions tab
-(`.github/workflows/github-pages.yml`, which builds with `SITE_BASE=/airux-website/`). The address
-is `https://absurd28.github.io/airux-website/`; set it as `site.url` in `site.json`.
+Cloudflare reads `_headers` (HTTPS-only, a strict content policy, caching); GitHub Pages ignores it.
 
 ## 6. A domain of your own, later
 
