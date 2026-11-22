@@ -372,7 +372,8 @@ $script</head>
 </html>
 """
 
-# For links to pages that no longer exist: keep the path, so /usb/#windows lands on /usb/#windows.
+# Keeps the path, query and #section, so /usb/#windows lands on /usb/#windows; the meta refresh
+# is the fallback without JavaScript (it can't keep the #section).
 FORWARD = """<script>
 var p = location.pathname, b = $base;
 if (p.indexOf(b) === 0) p = "/" + p.slice(b.length);
@@ -389,12 +390,12 @@ def build_redirect(base: str) -> Path:
     pages = sorted(str(p.parent.relative_to(real)).replace("\\", "/") for p in real.rglob("index.html"))
     shutil.rmtree(DIST)
     tpl = Template(MOVED)
+    script = Template(FORWARD).substitute(base=json.dumps(base), site=json.dumps(site_url))
     for rel in pages:
         to = site_url + "/" + ("" if rel == "." else rel + "/")
         out = DIST / ("" if rel == "." else rel) / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(tpl.substitute(to=esc(to), script=""), encoding="utf-8", newline="\n")
-    script = Template(FORWARD).substitute(base=json.dumps(base), site=json.dumps(site_url))
+        out.write_text(tpl.substitute(to=esc(to), script=script), encoding="utf-8", newline="\n")
     (DIST / "404.html").write_text(tpl.substitute(to=esc(site_url + "/"), script=script),
                                    encoding="utf-8", newline="\n")
     (DIST / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")

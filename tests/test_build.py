@@ -126,6 +126,7 @@ def test_old_address_forwards_every_page():
         assert not (out / "static").exists()          # and nothing else is published there
         usb = (out / "usb" / "index.html").read_text(encoding="utf-8")
         assert f'url={site}/usb/"' in usb and f'rel="canonical" href="{site}/usb/"' in usb
+        assert "location.hash" in usb                 # /usb/#windows keeps its #windows
         home = (out / "index.html").read_text(encoding="utf-8")
         assert f'url={site}/"' in home
         nf = (out / "404.html").read_text(encoding="utf-8")
