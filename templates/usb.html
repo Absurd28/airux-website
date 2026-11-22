@@ -1,0 +1,112 @@
+<section class="page-head wrap">
+  <p class="eyebrow">Step 2 of 3</p>
+  <h1>Make a bootable USB stick</h1>
+  <p class="lead">Write the AIRUX ISO to a USB stick, then start your PC from it. You can try AIRUX
+  without changing anything on your computer, and install it only if you want to.</p>
+</section>
+
+<section class="wrap">
+  <div class="callout warn" role="note">
+    <strong>Everything on the USB stick is erased.</strong> Use a stick of 8 GB or more with nothing on it you need.
+  </div>
+
+  <h2 id="write">1. Write the ISO to the stick</h2>
+  <p>Pick your computer's system. Don't have the ISO yet? <a href="${base}download/">Download it first</a>.</p>
+
+  <div class="tabs" data-tabs>
+    <div class="tablist" role="tablist" aria-label="Your system">
+      <button role="tab" id="tab-windows" aria-controls="os-windows" data-os="windows">Windows</button>
+      <button role="tab" id="tab-macos" aria-controls="os-macos" data-os="macos">macOS</button>
+      <button role="tab" id="tab-linux" aria-controls="os-linux" data-os="linux">Linux</button>
+    </div>
+
+    <section class="tabpanel" id="os-windows" role="tabpanel" aria-labelledby="tab-windows">
+      <h3 class="tab-title">Windows</h3>
+      <h4>With Rufus (recommended)</h4>
+      <ol class="steps">
+        <li>Download <a href="https://rufus.ie/" rel="noopener">Rufus</a> from its official site and open it.</li>
+        <li>Under <b>Device</b>, choose your USB stick. Under <b>Boot selection</b>, choose <code>$iso_file</code>.</li>
+        <li>Click <b>Start</b>. When Rufus asks how to write the image, choose <b>Write in DD Image mode</b>.
+          <span class="muted">(ISO mode does not boot this image reliably.)</span></li>
+        <li>Wait until the status says <b>Ready</b>, then close Rufus.</li>
+      </ol>
+      <h4>Or with balenaEtcher</h4>
+      <ol class="steps">
+        <li>Download <a href="https://etcher.balena.io/" rel="noopener">balenaEtcher</a> from its official site.</li>
+        <li><b>Flash from file</b> → choose the ISO → <b>Select target</b> → your stick → <b>Flash!</b></li>
+      </ol>
+    </section>
+
+    <section class="tabpanel" id="os-macos" role="tabpanel" aria-labelledby="tab-macos">
+      <h3 class="tab-title">macOS</h3>
+      <ol class="steps">
+        <li>Download <a href="https://etcher.balena.io/" rel="noopener">balenaEtcher</a> from its official site.</li>
+        <li><b>Flash from file</b> → choose <code>$iso_file</code> → <b>Select target</b> → your stick → <b>Flash!</b></li>
+        <li>If macOS says the disk is not readable afterwards, click <b>Eject</b>: that is expected.</li>
+      </ol>
+      <p class="muted">AIRUX runs on 64-bit Intel and AMD PCs. It does not run on Apple Silicon Macs.</p>
+    </section>
+
+    <section class="tabpanel" id="os-linux" role="tabpanel" aria-labelledby="tab-linux">
+      <h3 class="tab-title">Linux</h3>
+      <ol class="steps">
+        <li>Find the stick with <code>lsblk</code>. Here it is <code>/dev/sdX</code>: <b>make sure it is the stick</b>, not your disk.</li>
+        <li>Write the ISO:
+          <div class="code"><pre><code>sudo dd if=$iso_file of=/dev/sdX bs=4M status=progress conv=fsync</code></pre><button class="copy" type="button" data-copy>Copy</button></div>
+        </li>
+        <li>When the command finishes, the stick is ready.</li>
+      </ol>
+      <p class="muted">balenaEtcher also works on Linux.</p>
+    </section>
+  </div>
+
+  <h2 id="boot">2. Start your PC from the stick</h2>
+  <ol class="steps">
+    <li>Plug in the stick, then turn the PC on while pressing its boot-menu key:
+      <div class="table-wrap"><table>
+        <thead><tr><th>Brand</th><th>Boot-menu key</th></tr></thead>
+        <tbody>
+          <tr><td>Acer</td><td><kbd>F12</kbd> (turn it on first: press <kbd>F2</kbd> at power-on, open <b>Main</b>, set <b>F12 Boot Menu</b> to Enabled)</td></tr>
+          <tr><td>Dell</td><td><kbd>F12</kbd></td></tr>
+          <tr><td>HP</td><td><kbd>F9</kbd></td></tr>
+          <tr><td>Lenovo</td><td><kbd>F12</kbd></td></tr>
+          <tr><td>ASUS</td><td><kbd>Esc</kbd></td></tr>
+        </tbody>
+      </table></div>
+    </li>
+    <li>Choose the USB stick (the <b>UEFI</b> entry). Secure Boot can stay on.</li>
+    <li>The AIRUX menu starts the live system after 5 seconds. The desktop opens without a password.</li>
+    <li>AIRA's models take 1–3 minutes to load from the stick. When her status shows <b>idle</b>, she is ready.</li>
+  </ol>
+
+  <h2 id="try">3. Try AIRA</h2>
+  <ul class="ticks">
+    <li>Click <b>Talk</b> or press <kbd>Ctrl</kbd>+<kbd>Space</kbd>, speak, then press it again. Typing works too.</li>
+    <li>Try "How much disk space do I have?" or "Remind me in two minutes to stretch".</li>
+    <li>Anything risky (deleting, installing, sending something off the PC) waits under <b>Waiting for you</b> until you confirm.</li>
+  </ul>
+
+  <h2 id="install">4. Install AIRUX (optional)</h2>
+  <div class="callout danger" role="note">
+    <strong>The installer's "Erase disk" option wipes the whole disk, including Windows.</strong>
+    On a computer you want to keep as it is, use the live system only, or install on a spare disk.
+  </div>
+  <ol class="steps">
+    <li>Double-click <b>Install AIRUX</b> on the desktop.</li>
+    <li>Choose language, location and keyboard, then the disk: <b>Erase disk</b>, or <b>Manual</b> for a spare partition.</li>
+    <li>Set your name, user name, computer name and password, then <b>Install</b>.</li>
+    <li>Restart and remove the stick. At first boot AIRUX measures your hardware and picks AIRA's model size.</li>
+  </ol>
+
+  <h2 id="help">If something goes wrong</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Problem</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>The stick is not in the boot menu</td><td>Write it again in DD Image mode. To test, turn off Secure Boot.</td></tr>
+      <tr><td>Black screen after the menu</td><td>At the AIRUX menu press <kbd>e</kbd>, add <code>nomodeset</code> to the line that starts with <code>linux</code>, then press <kbd>F10</kbd>.</td></tr>
+      <tr><td>AIRA says she can't reach the model</td><td>Wait a minute: the model is still loading from the stick.</td></tr>
+      <tr><td>No sound or microphone</td><td>Pick the output or input device under the volume icon in the taskbar.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Still stuck? See the <a href="$known_issues_url" rel="noopener">known issues</a> or <a href="$github/issues" rel="noopener">open an issue on GitHub</a>.</p>
+</section>

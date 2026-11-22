@@ -1,0 +1,128 @@
+{
+  "site": {
+    "name": "AIRUX",
+    "url": "https://airux.pages.dev",
+    "tagline": "A Debian-based operating system with AIRA, a fully local voice assistant that controls your system safely and won't make things up.",
+    "github": "https://github.com/Absurd28/AIRUX_OS",
+    "license": "MIT",
+    "license_url": "https://github.com/Absurd28/AIRUX_OS/blob/main/LICENSE",
+    "licenses_url": "https://github.com/Absurd28/AIRUX_OS/blob/main/LICENSES.md",
+    "known_issues_url": "https://github.com/Absurd28/AIRUX_OS/blob/main/KNOWN_ISSUES.md"
+  },
+  "products": [
+    {
+      "id": "airux",
+      "kind": "os",
+      "name": "AIRUX",
+      "version": "0.1",
+      "released": "2026-11-22",
+      "published": false,
+      "tagline": "The operating system: Debian 13, a Windows 11-style desktop and AIRA built in.",
+      "summary": "AIRUX is an operating system for developers, engineers, researchers and scientists: Debian 13 with a developer toolchain and AIRA (Adaptive Intelligent Research Assistant), a voice assistant that does things with real tools on your machine. The language model, speech recognition, voice and her encrypted memory all run locally.",
+      "icon": "img/logo.svg",
+      "repo": "https://github.com/Absurd28/AIRUX_OS",
+      "downloads": [
+        {
+          "label": "Download from SourceForge",
+          "file": "airux-0.1-amd64.hybrid.iso",
+          "url": "https://sourceforge.net/projects/airux/files/0.1/airux-0.1-amd64.hybrid.iso/download",
+          "bytes": 4658798592,
+          "sha256": "636429840a22266d181a941c8aa6d46bb76222aeb393d6a73b0547251718c51c",
+          "primary": true
+        },
+        {
+          "label": "SHA256SUMS",
+          "file": "SHA256SUMS",
+          "url": "https://sourceforge.net/projects/airux/files/0.1/SHA256SUMS/download",
+          "primary": false
+        }
+      ],
+      "requirements": [
+        "A 64-bit PC (x86-64) with UEFI firmware. Secure Boot can stay on.",
+        "4 GB of RAM at least; 8 GB or more is better.",
+        "A USB stick of 8 GB or more. Everything on it is erased.",
+        "To install (optional): 20 GB of disk or more. The system takes 8.4 GB, and a bigger AIRA model adds up to about 6 GB."
+      ],
+      "notes": [
+        "Ships the 2B model and runs it on the CPU. At first boot a profiler measures your hardware, and AIRA can download a bigger model (4B or 9B) after asking you.",
+        "Installs are UEFI only. Legacy BIOS can boot the live system but cannot install it.",
+        "NVIDIA's driver is not on the ISO; AIRUX Drivers installs it in one click after installation."
+      ],
+      "features": [
+        ["AIRA, your local assistant", "Talk to her with Ctrl+Space: \"How much disk space do I have?\", \"Run the tests in my project\", \"Remind me in ten minutes to stretch\". She works with real tools on your machine, and nothing leaves it unless you say so."],
+        ["A grounding guard in code", "She never acts on files or apps that don't exist, never says \"done\" without checking, and says \"I'm not sure\" instead of guessing."],
+        ["A permission broker", "Deleting, installing, root actions, network changes and anything sent off the machine wait for your confirmation. Every action is logged."],
+        ["Windows 11-style desktop", "KDE Plasma 6 with a centred taskbar, Start menu, File Explorer, Settings and the shortcuts you know."],
+        ["NEOX browser and VPN", "Chromium's engine with Shields, strict privacy defaults, a private window with Tor and a free VPN that can change country every few minutes."],
+        ["AIROX Code", "A VS Code-based editor with AIRA built in like Copilot: chat with sources, inline suggestions and reviewed edits, all on the local model."],
+        ["Phagos antivirus", "Real-time protection designed like an immune system. It pauses a program that starts encrypting your files and lets you decide."],
+        ["Task Manager and Drivers", "A Windows 11-style Task Manager (Ctrl+Shift+Esc), and AIRUX Drivers, which shows what hardware works and installs fixes."]
+      ],
+      "screenshots": [
+        ["img/os/tour-01-desktop.webp", "The AIRUX desktop with AIRA's side panel"],
+        ["img/os/tour-03-aira-answers.webp", "AIRA answering from a tool, not a guess"],
+        ["img/os/tour-02-start-menu.webp", "The Start menu"],
+        ["img/os/tour-04-airox-code-aira.webp", "AIROX Code with AIRA"],
+        ["img/os/tour-05-neox-aira-panel.webp", "NEOX with AIRA's panel"],
+        ["img/os/neox-vpn.webp", "NEOX VPN"],
+        ["img/os/phagos-5-app.webp", "Phagos antivirus"],
+        ["img/os/task-manager.webp", "Task Manager"],
+        ["img/os/drivers-app.webp", "AIRUX Drivers"],
+        ["img/os/desktop-12-airux-snake.webp", "AIRUX Snake, one of the offline games"]
+      ]
+    },
+    {
+      "id": "airox-connect",
+      "kind": "app",
+      "platform": "Android",
+      "name": "AIROX Connect",
+      "version": "0.1.0",
+      "released": "2026-11-22",
+      "published": false,
+      "preview": "Preview build (debug-signed). A signed release build will replace it.",
+      "tagline": "AIRUX on your phone: talk to AIRA, share files, use the Task Manager.",
+      "summary": "AIROX Connect pairs your Android phone or tablet with your AIRUX PC by QR code, on the same network. Talk to AIRA by text or voice, see running apps and what AIRA is doing, send files and media both ways, and use the phone as a touchpad, remote or second screen. It is encrypted to your PC's own certificate, and every action passes AIRA's permission broker: risky ones are approved on the phone.",
+      "icon": "img/logo.svg",
+      "repo": "https://github.com/Absurd28/AIROX_Connect",
+      "downloads": [
+        {
+          "label": "Download the APK",
+          "file": "airox-connect-0.1.0.apk",
+          "url": "https://github.com/Absurd28/AIROX_Connect/releases/download/v0.1.0/airox-connect-0.1.0.apk",
+          "bytes": 61159165,
+          "sha256": "c34784bc6e4e3fb761f048c040e0fe2b8075631afa8829ed4a7fd99f4c84b82c",
+          "primary": true
+        }
+      ],
+      "requirements": [
+        "Android 10 or newer, on a phone or tablet.",
+        "A PC running AIRUX on the same network (Wi-Fi or Ethernet).",
+        "On AIRUX it is also in the AIROX Connect window: \"Share the app\" shows a QR code to download it from the PC."
+      ],
+      "install": [
+        "Download the APK on your phone and open it.",
+        "Android asks to allow installing apps from your browser: allow it for this install.",
+        "In the app, tap Scan the pairing code.",
+        "On the PC, open the AIROX Connect window, click Show pairing code and scan it. The code works once, for two minutes.",
+        "Click Allow on the PC. Your phone is paired."
+      ],
+      "features": [
+        ["Talk to AIRA", "By text or voice; she answers on the phone in her own voice."],
+        ["See what is running", "Running apps, what AIRA is doing, and the Task Manager with processes and performance."],
+        ["Share anything", "Files and media both ways, the clipboard and links."],
+        ["Control the PC", "Touchpad, keyboard, media remote, glance at the screen; lock, sleep or wake the PC."],
+        ["A second screen", "Make the phone or tablet an extra display with touch."],
+        ["Safe by design", "Encrypted to your PC's certificate; risky actions are approved on the phone."]
+      ],
+      "screenshots": [
+        ["img/connect/02-home.webp", "Home: the paired PC at a glance"],
+        ["img/connect/03-aira.webp", "Talking to AIRA"],
+        ["img/connect/04-tasks-processes.webp", "Task Manager on the phone"],
+        ["img/connect/07-files.webp", "Sending files"],
+        ["img/connect/09-touchpad.webp", "Touchpad and keyboard"],
+        ["img/connect/01-pair.webp", "Pairing by QR code"],
+        ["img/connect/11-second-screen.webp", "The tablet as a second screen"]
+      ]
+    }
+  ]
+}

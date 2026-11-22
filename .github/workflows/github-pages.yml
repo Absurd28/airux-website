@@ -1,0 +1,28 @@
+# Optional: publish on GitHub Pages instead of Cloudflare Pages (see DEPLOY.md, step 5).
+# Runs only when started by hand (Actions -> GitHub Pages -> Run workflow) after choosing
+# "GitHub Actions" as the Pages source in the repository settings.
+name: GitHub Pages
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: SITE_BASE=/${{ github.event.repository.name }}/ python3 build.py
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$title</title>
+<meta name="description" content="$description">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0d1117">
+<link rel="canonical" href="$canonical">
+<meta property="og:type" content="website">
+<meta property="og:title" content="$title">
+<meta property="og:description" content="$description">
+<meta property="og:url" content="$canonical">
+<meta property="og:image" content="$og_image">
+<link rel="icon" href="${base}static/img/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="${base}static/style.css?v=$version">
+<script src="${base}static/site.js?v=$version" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="$base"><img src="${base}static/img/logo.svg" alt="" width="32" height="32"><span>AIRUX</span></a>
+    <nav aria-label="Main">
+      <a href="${base}download/"$nav_download>Download</a>
+      <a href="${base}usb/"$nav_usb>Make a USB</a>
+      <a href="${base}apps/"$nav_apps>Apps</a>
+      <a href="$github" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+$content
+</main>
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <p><strong>AIRUX</strong> is free and open source ($license). Built on Debian; not affiliated with the Debian project.</p>
+      <p class="muted">No cookies, no tracking, no third-party scripts on this site.</p>
+    </div>
+    <ul class="foot-links">
+      <li><a href="${base}download/">Download</a></li>
+      <li><a href="${base}apps/">Apps</a></li>
+      <li><a href="$github" rel="noopener">Source code</a></li>
+      <li><a href="$licenses_url" rel="noopener">Licences</a></li>
+      <li><a href="$known_issues_url" rel="noopener">Known issues</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>
