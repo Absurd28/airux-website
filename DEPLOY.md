@@ -113,3 +113,24 @@ better free choice.
 Add an entry to `products` in `site.json` (copy AIROX Connect's), put its screenshots as WebP in
 `static/img/<app>/`, run `python3 build.py` and the tests. It appears on the Apps page, the home
 page and at `/apps/<id>/`.
+
+## CI/CD
+
+| Workflow | Runs when | What it does |
+| --- | --- | --- |
+| `github-pages.yml` | every push to `main`, or **Run workflow** | runs the tests, builds, deploys to GitHub Pages; a failing test stops the deploy |
+| `links.yml` | Mondays 06:00 UTC, or **Run workflow** | builds, then `tests/check_links.py`: every download answers 200 with the size in `site.json`, `SHA256SUMS` lists the ISO's hash, no external link is broken. Read-only; deploys nothing |
+| Dependabot (`.github/dependabot.yml`) | monthly | opens a pull request when an action in the workflows has a new version |
+
+Run the link check yourself before changing a download:
+
+```bash
+python3 build.py && python3 tests/check_links.py    # exit code 1 and a FAIL line per problem
+```
+
+GitHub sends scheduled-workflow notifications to whoever last changed the workflow's `cron` line.
+
+**Scheduled runs stop after 60 days without commits.** In a public repository GitHub disables a
+scheduled workflow when the repository has had no activity, such as commits, for 60 days. A later
+push does not turn it back on. To re-enable it: **Actions** tab → **Link check** in the list on
+the left → **Enable workflow** (or `gh workflow enable links.yml`).

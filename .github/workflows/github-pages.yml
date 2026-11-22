@@ -19,13 +19,13 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Test
-        run: pip install pytest && python3 -m pytest -q tests
+        run: pip install pytest==9.2.0 && python3 -m pytest -q tests
       - name: Build
         run: SITE_BASE=/${{ github.event.repository.name }}/ python3 build.py
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

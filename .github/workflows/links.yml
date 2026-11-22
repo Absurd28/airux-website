@@ -1,0 +1,20 @@
+# Every Monday at 06:00 UTC (and on demand from the Actions tab): build the site and check that the
+# downloads answer with the right size, SHA256SUMS lists the ISO's hash, and no external link is broken.
+# GitHub notifies whoever last changed the schedule when a run fails. It changes and deploys nothing.
+name: Link check
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build
+        run: SITE_BASE=/${{ github.event.repository.name }}/ python3 build.py
+      - name: Check links
+        run: python3 tests/check_links.py
