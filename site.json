@@ -16,7 +16,7 @@
       "name": "AIRUX",
       "version": "0.1",
       "released": "2026-11-22",
-      "published": false,
+      "published": true,
       "tagline": "The operating system: Debian 13, a Windows 11-style desktop and AIRA built in.",
       "summary": "AIRUX is an operating system for developers, engineers, researchers and scientists: Debian 13 with a developer toolchain and AIRA (Adaptive Intelligent Research Assistant), a voice assistant that does things with real tools on your machine. The language model, speech recognition, voice and her encrypted memory all run locally.",
       "icon": "img/logo.svg",
